@@ -9,13 +9,14 @@ class Landing extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-center">
-              <h1 className="display-3 mb-4">Director Connector
+              <h1 className="display-3 mb-4">Director Network
               </h1>
               <p className="lead">
-                Create a profile or portfolio, share posts, videos, tricks and get help from other members.</p>
+                Créez votre profil, partagez vos actus, vidéos, astuces et échangez avec les autres membres.
+                </p>
               <hr/>
-            <Link to="/register" className="btn btn-lg btn-info mr-2">Sign Up</Link>
-          <Link to="/login" className="btn btn-lg btn-light">Login</Link>
+              <Link to="/register" className="btn btn-lg btn-info mr-3">Inscription</Link>
+              <Link to="/login" className="btn btn-lg btn-light">Connexion</Link>
             </div>
           </div>
         </div>

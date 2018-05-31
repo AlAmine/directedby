@@ -1,6 +1,9 @@
 import React from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { registerUser } from '../../action/authActions'
 
 class Register extends React.Component {
   constructor() {
@@ -15,6 +18,12 @@ class Register extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+// Gestion des errors avec les props
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.errors) {
+        this.setState({errors: nextProps.errors})
+    }
+  }
     onChange(e) {
       this.setState({[e.target.name]: e.target.value})
     }
@@ -28,11 +37,10 @@ class Register extends React.Component {
         password2: this.state.password2
       };
 
-      axios.post('/api/users/register', newUser).then(res => console.log(res.data)).catch(err => this.setState({errors: err.response.data}));
+    this.props.registerUser(newUser, this.props.history); // this.props.history => permet d'effectuer le redirect à l'intérieur du componenent lors de l'action
     }
   render() {
-    const {errors} = this.state;  // => const errors = this.state.errors;
-
+    const { errors } = this.state;  // => const errors = this.state.errors;
 
     return (
     <div className="register">
@@ -92,7 +100,17 @@ class Register extends React.Component {
           </div>
         </div>
       </div>
-    </div>)
+    </div>
+    );
   }
 }
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+export default connect(mapStateToProps, {registerUser})(withRouter(Register));
