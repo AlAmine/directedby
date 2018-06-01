@@ -1,8 +1,53 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+// import des actions
+import { logoutUser } from '../../action/authActions';
+import { clearCurrentProfile } from '../../action/profileActions';
+
 
 class Navbar extends React.Component {
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.clearCurrentProfile();
+    this.props.logoutUser();
+  }
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+
+    const authLinks = (
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
+          <a
+            href=""
+            onClick={this.onLogoutClick.bind(this)}
+            className="nav-link">
+              <img
+                className="rounded circle"
+                src={user.avatar}
+                alt={user.name}
+                style={{ width: '25px', marginRight: '5px' }}
+                title="Vous devez avoir un compte avatar lié à votre adresse mail pour afficher un avatar"
+              />{ ' ' }
+              Logout
+            </a>
+        </li>
+      </ul>
+    );
+
+    const guestLinks = (
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
+          <Link className="nav-link" to="/register">S'inscrire</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/login">Se connecter</Link>
+        </li>
+      </ul>
+    );
+
     return (<nav className="navbar navbar-expand-sm navbar-dark bg-info mb-4">
       <div className="container">
         <Link className="navbar-brand" to="/">DirectedBy</Link>
@@ -13,26 +58,24 @@ class Navbar extends React.Component {
         <div className="collapse navbar-collapse" id="mobile-nav">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/profile">Membres</Link>
+              <Link className="nav-link" to="/profiles">Membres</Link>
             </li>
           </ul>
+            {isAuthenticated ? authLinks : guestLinks}
 
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">S'inscrire</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Se connecter</Link>
-            </li>
-          </ul>
-          {/* <form className="form-inline my-2 my-lg-0">
-            <input className="form-control mr-sm-2" type="search" placeholder="Search a member" aria-label="Search" />
-          <button className="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-          </form> */}
+
         </div>
       </div>
     </nav>)
   }
 }
+Navbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+}
 
-export default Navbar;
+const mapStateProps = (state) => ({
+  auth: state.auth
+})
+
+export default connect (mapStateProps, {logoutUser, clearCurrentProfile})(Navbar);

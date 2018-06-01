@@ -43,3 +43,13 @@ export const loginUser = userData => dispatch => {
       payload: decoded
     }
   }
+
+  // fonction pour se déconnecter
+  export const logoutUser = () => dispatch => {
+    // on efface le token du localStorage
+    localStorage.removeItem('jwtToken');
+    // on l'efface du header
+    setAuthToken(false);
+    // on redefinit les donneés du current user et on passe isAuthenticate => false
+    dispatch(setCurrentUser({}))
+  }
