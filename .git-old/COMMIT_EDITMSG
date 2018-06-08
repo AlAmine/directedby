@@ -1,0 +1,27 @@
+
+Dashboard 
+# Veuillez saisir le message de validation pour vos modifications. Les lignes
+# commençant par '#' seront ignorées, et un message vide abandonne la validation.
+# Sur la branche master
+# Votre branche est à jour avec 'origin/master'.
+#
+# Modifications qui seront validées :
+#	renommé :         client/public/favicon.ico -> client/public/cam.ico
+#	modifié :         client/public/index.html
+#	modifié :         client/src/App.js
+#	modifié :         client/src/action/authActions.js
+#	nouveau fichier : client/src/action/profileActions.js
+#	modifié :         client/src/action/types.js
+#	modifié :         client/src/components/auth/Login.js
+#	modifié :         client/src/components/auth/Register.js
+#	nouveau fichier : client/src/components/common/PrivateRoute.js
+#	nouveau fichier : client/src/components/common/Spinner.js
+#	nouveau fichier : client/src/components/common/TextFieldGroup.js
+#	nouveau fichier : client/src/components/common/spinner.gif
+#	nouveau fichier : client/src/components/dashboard/Dashboard.js
+#	modifié :         client/src/components/layout/Landing.js
+#	modifié :         client/src/components/layout/Navbar.js
+#	modifié :         client/src/reducers/errorReducer.js
+#	modifié :         client/src/reducers/index.js
+#	nouveau fichier : client/src/reducers/profileReducer.js
+#
