@@ -29,6 +29,9 @@ const ProfileSchema = new Schema({
     type: [String],
     required: true
   },
+  bio: {
+    type: String
+  },
 
   videoCreatorGears: [
     {
@@ -45,7 +48,12 @@ const ProfileSchema = new Schema({
       },
       url: {
         type: String
-
+      },
+      file: {
+        type: String
+      },
+      image: {
+        type: String
       }
     }
   ],
@@ -56,7 +64,7 @@ const ProfileSchema = new Schema({
         required: true
       },
       typeofgears: {
-        type: String,
+        type: [String],
         required: true
       },
       description: {
@@ -64,7 +72,12 @@ const ProfileSchema = new Schema({
       },
       url: {
         type: String
-
+      },
+      file: {
+        type: String
+      },
+      image: {
+        type: String
       }
     }
   ],

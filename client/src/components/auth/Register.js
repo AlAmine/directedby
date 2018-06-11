@@ -20,7 +20,7 @@ class Register extends React.Component {
   }
   componentDidMount() {
     if(this.props.auth.isAuthenticated){
-      this.props.history.push('/dashbord');
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -85,14 +85,14 @@ class Register extends React.Component {
 
               <TextFieldGroup
                 placeholder="Confirmez votre mot de passe"
-                name="password"
+                name="password2"
                 value={this.state.password2}
                 onChange={this.onChange}
                 error={errors.password2}
-                type="password2"
+                type="password"
               />
 
-              <input type="submit" className="btn btn-info btn-block mt-4"/>
+              <input type="submit" className="btn btn-primary btn-block mt-4"/>
             </form>
           </div>
         </div>

@@ -171,14 +171,16 @@ router.post('/creatorsgears', passport.authenticate('jwt', { session: false}), (
 
   Profile.findOne({ user: req.user.id })
   .then(profile => {
-    const newEgear = {
+    const newCgear = {
       title: req.body.title,
       typeofgears: req.body.typeofgears,
       description: req.body.description,
-      url: req.body.url
+      url: req.body.url,
+      image:req.body.image,
+      file: req.body.file
     }
     // Ajouter au tableau videoEditingGears
-    profile.videoCreatorGears.unshift(newEgear);
+    profile.videoCreatorGears.unshift(newCgear);
 
     profile.save().then(profile => res.json(profile));
   })
@@ -189,7 +191,7 @@ router.post('/creatorsgears', passport.authenticate('jwt', { session: false}), (
 // @acces Private
 
 router.post('/editinggears', passport.authenticate('jwt', { session: false}), (req,res) => {
-  const { errors, isValid } = validateCgearsInput(req.body);
+  const { errors, isValid } = validateEgearsInput(req.body);
 
   // Verification des champs
   if(!isValid) {
@@ -202,7 +204,9 @@ router.post('/editinggears', passport.authenticate('jwt', { session: false}), (r
       title: req.body.title,
       typeofgears: req.body.typeofgears,
       description: req.body.description,
-      url: req.body.url
+      url: req.body.url,
+      image:req.body.image,
+      file: req.body.file
     }
     // Ajouter au tableau videoEditingGears
     profile.videoEditingGears.unshift(newEgear);

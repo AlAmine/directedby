@@ -3,14 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "amazon-products": "0.0.9",
     "axios": "^0.18.0",
     "classnames": "^2.2.5",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.22.2",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-moment": "^0.7.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "react-youtube": "^7.6.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"
   },

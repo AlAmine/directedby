@@ -8,7 +8,9 @@ hr {
   border-top: 1px solid #fff5be;
 
 }
-
+hr.dash {
+    border-top: 1px solid #000;
+}
 .landing {
   position: relative;
   background: url('./img/directedby.jpg') no-repeat;
@@ -43,4 +45,41 @@ hr {
 
 .form-control::placeholder {
   color: #bbb !important;
+}
+span {
+  color: #bbb;
+  padding: .4rem;
+  font-size: 1.25rem;
+  line-height: 1.5rem
+}
+
+.custom-file-input:lang(language) {
+  en: "Browse";
+  fr: "Parcourir";
+
+}
+
+/* on personnalise le label comme on veut */
+.label-file {
+    cursor: pointer;
+
+}
+.label-file:hover {
+    color: #25a5c4;
+}
+
+
+/* .input-file {
+    display: none;
+} */
+
+.disabled {
+  display: none;
+}
+.displayImg {
+  width: 70px;
+}
+
+button.modif {
+  width: 110px;
 }
