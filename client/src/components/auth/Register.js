@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { registerUser } from '../../action/authActions'
+import { registerUser } from '../../action/authActions';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class Register extends React.Component {
   constructor() {
@@ -18,6 +18,12 @@ class Register extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+  componentDidMount() {
+    if(this.props.auth.isAuthenticated){
+      this.props.history.push('/dashboard');
+    }
+  }
+
 // Gestion des errors avec les props
   componentWillReceiveProps(nextProps) {
     if(nextProps.errors) {
@@ -48,54 +54,45 @@ class Register extends React.Component {
         <div className="row">
           <div className="col-md-8 m-auto">
             <h1 className="display-4 text-center">Inscription</h1>
-          <p className="lead text-center">Créez votre compte <i>DirectedBy</i></p>
-        <form noValidate onSubmit={this.onSubmit}>
-              <div className="form-group">
-                <input
-                  type="text"
-                  className={classnames('form-control form-control-lg', { 'is-invalid' : errors.name })}
-                  placeholder="Votre nom"
-                  name="name"
-                  onChange={this.onChange}
-                  value={this.state.name}
-                />
-              { errors.name && (<div className="invalid-feedback">{ errors.name }</div>)}
-              </div>
-              <div className="form-group">
-                <input
-                  type="email"
-                  className={classnames('form-control form-control-lg', { 'is-invalid' : errors.email })}
-                  placeholder="Votre adresse mail liée à votre compte Gravatar"
-                  name="email"
-                  onChange={this.onChange}
-                  value={this.state.email}
-                />
-              { errors.email && (<div className="invalid-feedback">{ errors.email }</div>)}
-                <small className="form-text text-muted">Nous utilisons Gravatar donc pour bénéficier d'une image de profil cohérante à vos ambitions, merci d'utiliser une adresse mail Gravatar</small>
-              </div>
-              <div className="form-group">
-                <input
-                  type="password"
-                  className={classnames('form-control form-control-lg', { 'is-invalid' : errors.password })}
-                  placeholder="Votre mot de passe"
-                  name="password"
-                  onChange={this.onChange}
-                  value={this.state.password}
-                />
-              { errors.password && (<div className="invalid-feedback">{ errors.password }</div>)}
-              </div>
-              <div className="form-group">
-                <input
-                  type="password"
-                  className={classnames('form-control form-control-lg', { 'is-invalid' : errors.password2 })}
-                  placeholder="Confirmez votre mot de passe"
-                  name="password2"
-                  onChange={this.onChange}
-                  value={this.state.password2}
-                />
-              {errors.password2 && (<div className="invalid-feedback">{ errors.password2 }</div>)}
-              </div>
-              <input type="submit" className="btn btn-info btn-block mt-4"/>
+            <p className="lead text-center">Créez votre compte <i>DirectedBy</i></p>
+            <form noValidate onSubmit={this.onSubmit}>
+              <TextFieldGroup
+                placeholder="Votre nom"
+                name="name"
+                value={this.state.name}
+                onChange={this.onChange}
+                error={errors.name}
+              />
+
+              <TextFieldGroup
+                placeholder="Votre adresse mail liée à votre compte Gravatar"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={errors.email}
+                type="email"
+                info="Nous utilisons Gravatar donc pour bénéficier d'une image de profil cohérante à vos ambitions, merci d'utiliser une adresse mail liée à un compte Gravatar"
+              />
+
+              <TextFieldGroup
+                placeholder="Votre mot de passe"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={errors.password}
+                type="password"
+              />
+
+              <TextFieldGroup
+                placeholder="Confirmez votre mot de passe"
+                name="password2"
+                value={this.state.password2}
+                onChange={this.onChange}
+                error={errors.password2}
+                type="password"
+              />
+
+              <input type="submit" className="btn btn-primary btn-block mt-4"/>
             </form>
           </div>
         </div>

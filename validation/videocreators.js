@@ -8,11 +8,11 @@ module.exports = function validateCgearsInput(data) {
   data.typeofgears = !isEmpty(data.typeofgears) ? data.typeofgears : '';
 
     if(Validator.isEmpty(data.title)) {
-    errors.title = "Le nom de votre matériel est obligatoire";
+    errors.title = "Le nom est obligatoire";
   }
 
   if(Validator.isEmpty(data.typeofgears)) {
-    errors.typeofgears = "Le type du matériel est obligatoire";
+    errors.typeofgears = "Le type est obligatoire";
   }
 
   if(!isEmpty(data.url)) {

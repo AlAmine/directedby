@@ -13,6 +13,7 @@
   "author": "Al Amine OUSMAN",
   "license": "ISC",
   "dependencies": {
+    "amazon-products": "0.0.9",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "concurrently": "^3.5.1",
