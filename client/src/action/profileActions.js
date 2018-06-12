@@ -58,6 +58,7 @@ export const addVideoEditor = (videoEditorData, history) => dispatch => {
 }
 // delete VideoEditor
 export const deleteEditor = (id) => dispatch => {
+  if(window.confirm('Voulez-vous réellement supprimer cette vidéo ? Cette action est irreversible !')) {
   axios
     .delete(`/api/profile/editinggears/${id}`)
     .then(res =>
@@ -73,11 +74,14 @@ export const deleteEditor = (id) => dispatch => {
 
       })
     )
+  }
 }
 
 // delete VideoCreator
 export const deleteCreator = (id) => dispatch => {
-  axios
+  if(window.confirm('Voulez-vous réellement supprimer ce matériel ? Cette action est irreversible !')) {
+
+    axios
     .delete(`/api/profile/creatorsgears/${id}`)
     .then(res =>
       dispatch({
@@ -92,6 +96,7 @@ export const deleteCreator = (id) => dispatch => {
 
       })
     )
+  }
 }
 
 // Delete Account & Profile

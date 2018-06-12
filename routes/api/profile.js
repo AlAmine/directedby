@@ -233,6 +233,40 @@ router.delete('/creatorsgears/:cre_id', passport.authenticate('jwt', { session: 
   .catch(err => res.status(404).json(err));
 });
 
+// @route POST api/profile/creatorsgears/:cre_id
+// @ desc Modifie le matériel de creation du profil
+// @acces Private
+
+router.post('/creatorsgears/:cre_id', passport.authenticate('jwt', { session: false}), (req,res) => {
+  const { errors, isValid } = validateCgearsInput(req.body);
+  // récupération des champs
+  const editorFields = {};
+  editorFields.user = req.user.id;
+  if(req.body.title) editorFields.videoCreatorGears.title = req.body.title;
+  if(req.body.typeofgears) editorFields.videoCreatorGears.typeofgears = req.body.typeofgears;
+  if(req.body.description) editorFields.videoCreatorGears.description = req.body.description;
+  if(req.body.file) editorFields.videoCreatorGears.file = req.body.file;
+  if(req.body.url) editorFields.videoCreatorGears.url = req.body.url;
+  if(req.body.image) editorFields.videoCreatorGears.image = req.body.image;
+
+
+  Profile.findOne({ user: req.user.id})
+  .then(profile => {
+    if(profile) {
+      // Modification et mise à du profil
+      Profile.findOneAndUpdate({ videoCreatorGears_id : req.params.cre_id }, { $set: editorFields }, { new: true }).then(profile => {
+    res.json(profile)
+
+  })
+
+    // Ajouter au tableau videoEditingGears
+    profile.videoCreatorGears.unshift(editorFields);
+
+    profile.save().then(profile => res.json(profile));
+  }
+
+})
+})
 
 // @route DELETE api/profile/editinggears/:edi_id
 // @ desc Efface le matériel d'edit du profil

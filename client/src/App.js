@@ -26,6 +26,7 @@ import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
 import AddVideoCreator from './components/add-credentials/AddVideoCreator';
 import AddVideoEditor from './components/add-credentials/AddVideoEditor';
+
 // Import CSS
 import './App.css';
 
@@ -76,6 +77,7 @@ class App extends Component {
             <Switch>
               <PrivateRoute exact path="/add-video-editing" component={ AddVideoEditor } />
             </Switch>
+
           </div>
           <Footer/>
         </div>

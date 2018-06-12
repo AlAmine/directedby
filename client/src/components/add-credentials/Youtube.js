@@ -28,19 +28,19 @@ class Example extends React.Component {
 export default Example
 
 
-onFileSelect(e) {
-  this.setState({file: e.target.value}, () => {
-    let preview = document.getElementById('preview');
-    let file = document.getElementById('customFileLang').files[0];
-    let reader = new FileReader();
-    reader.addEventListener("load", () => {
-      preview.src = reader.result;
-      console.log(preview.src);
-    }, false );
-    if(file) {
-      reader.readAsDataURL(file);
-      console.log(file)
-    }
-
-  })
-}
+// onFileSelect(e) {
+//   this.setState({file: e.target.value}, () => {
+//     let preview = document.getElementById('preview');
+//     let file = document.getElementById('customFileLang').files[0];
+//     let reader = new FileReader();
+//     reader.addEventListener("load", () => {
+//       preview.src = reader.result;
+//       console.log(preview.src);
+//     }, false );
+//     if(file) {
+//       reader.readAsDataURL(file);
+//       console.log(file)
+//     }
+//
+//   })
+// }

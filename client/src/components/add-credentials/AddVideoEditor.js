@@ -46,20 +46,20 @@ class AddVideoEditor extends React.Component {
   onChange(e) {
     this.setState({[e.target.name]: e.target.value})
   }
-  
+
   render() {
     const { errors } = this.state;
 
     // Liste des choix pour le type de matériel
     const options = [
       { label: '* Indiquez le type', value: 0 },
-      { label: 'Ordinateur', value: 'Ordinateur' },
-      { label: `Logiciel d'édition`, value: `Logiciels d'édition` },
-      { label: 'Logiciel audio', value: 'Lumière' },
-      { label: 'Ecran', value: 'Ecran' },
-      { label: 'Casque', value: 'Casque' },
-      { label: 'Souris', value: 'Clavier' },
-      { label: 'Disque Dur', value: 'Disque Dur' },
+      { label: 'Court-Métrage', value: 'Ordinateur' },
+      { label: `Clip`, value: `Logiciels d'édition` },
+      { label: `Vidéo d'entreprise`, value: 'Lumière' },
+      { label: 'Film', value: 'Ecran' },
+      { label: 'Animation', value: 'Casque' },
+      { label: 'Film Amateur', value: 'Clavier' },
+      { label: 'Animation', value: 'Disque Dur' },
       { label: 'Autre', value: 'Autre' }
     ]
     return (
@@ -70,8 +70,8 @@ class AddVideoEditor extends React.Component {
               <Link to="/dashboard" className="btn btn-light">
                 Retour au Dashboard
               </Link>
-              <h1 className="display-4 text-center">Ajouter vos logiciels</h1>
-              <p className="lead text-center">Mac, PC, Premiere, Final Cut, AfterEffect... Ajoutez les logiciels que vous utilisez pour la post-prod.</p>
+              <h1 className="display-4 text-center">Ajoutez vos vidéos</h1>
+              <p className="lead text-center">Du film amateur, en passant par des clips et jusqu'à Hollywood. <br />Ajoutez toutes vos réalisations</p>
               <small className="d-block pb-3">* = champs obligatoires</small>
               <form onSubmit={this.onSubmit}>
 

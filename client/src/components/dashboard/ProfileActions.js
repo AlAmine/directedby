@@ -8,10 +8,10 @@ const ProfileActions = () => {
         <i className="fas fa-user-circle text-info mr-2" />Modifier votre profil
       </Link>
       <Link to="/add-video-creator" className="btn btn-light">
-        <i className="fas fa-video text-info mr-2" />Ajouter du matériel de captation
+        <i className="fas fa-video text-info mr-2" />Ajouter votre matériel de captation
       </Link>
       <Link to="/add-video-editing" className="btn btn-light">
-        <i className="fas fa-file-video text-info mr-2" />Ajouter du matériel d'édition
+        <i className="fab fa-youtube text-info mr-2" />Ajouter vos réalisations
       </Link>
     </div>
   )

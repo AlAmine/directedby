@@ -60,6 +60,13 @@ class AddVideoCreator extends React.Component {
       { label: 'Lumière', value: 'Lumière' },
       { label: 'Stabilisateur', value: 'Stabilisateur' },
       { label: 'Microphone', value: 'Microphone' },
+      { label: 'Ordinateur', value: 'Ordinateur' },
+      { label: `Logiciel d'édition`, value: `Logiciels d'édition` },
+      { label: 'Logiciel audio', value: 'Lumière' },
+      { label: 'Ecran', value: 'Ecran' },
+      { label: 'Casque', value: 'Casque' },
+      { label: 'Souris', value: 'Clavier' },
+      { label: 'Disque Dur', value: 'Disque Dur' },
       { label: 'Autre', value: 'Autre' }
     ]
     return (
