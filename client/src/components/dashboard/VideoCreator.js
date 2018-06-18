@@ -2,29 +2,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteCreator,  } from '../../action/profileActions';
-
+// import Example from '../../components/add-credentials/Youtube';
 
 class VideoCreator extends React.Component {
   onDeleteRef(id) {
     this.props.deleteCreator(id)
   }
 
+
+
   render() {
 
     const creator = this.props.creator.map(create => (
-
       <tr key={create._id}>
         <td><a href={create.image} target="_blank"><img className="displayImg" src={create.image} alt={create.title}/></a></td>
         <td>{create.title}</td>
         <td>{create.typeofgears}</td>
         <td>{create.description}</td>
         <td><a href={create.url} className={(create.url === null || create.url === '' ? 'disabled' : 'btn btn-primary')} target="blank">Voir la fiche</a></td>
-        <td><button onClick={this.onDeleteRef.bind(this)} className="btn btn-danger">Supprimer <i className="fas fa-trash-alt"></i></button> </td>
+        <td><button onClick={this.onDeleteRef.bind(this)} className="btn btn-danger">Supprimer </button> </td>
       </tr>
     ))
 
     return (
-      <div>
+
+      <div className={this.props.creator !== undefined ? "active" : "disabled"}>
         <h3 className="mb-4">Votre matériel de captation</h3>
           <table className="table table-striped table-bordered table-list">
             <thead>
@@ -41,6 +43,7 @@ class VideoCreator extends React.Component {
           </table>
 
       </div>
+
     )
   }
 }

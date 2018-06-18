@@ -49,9 +49,6 @@ const ProfileSchema = new Schema({
       url: {
         type: String
       },
-      file: {
-        type: String
-      },
       image: {
         type: String
       }
@@ -71,12 +68,6 @@ const ProfileSchema = new Schema({
         type: String
       },
       url: {
-        type: String
-      },
-      file: {
-        type: String
-      },
-      image: {
         type: String
       }
     }

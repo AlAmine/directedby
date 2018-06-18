@@ -6,7 +6,7 @@ import TextFieldGroup  from '../common/TextFieldGroup';
 import TextAreaFieldGroup  from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import { addVideoEditor } from '../../action/profileActions';
-
+import Example from '../../components/add-credentials/Youtube';
 
 
 
@@ -52,14 +52,14 @@ class AddVideoEditor extends React.Component {
 
     // Liste des choix pour le type de matériel
     const options = [
-      { label: '* Indiquez le type', value: 0 },
-      { label: 'Court-Métrage', value: 'Ordinateur' },
-      { label: `Clip`, value: `Logiciels d'édition` },
-      { label: `Vidéo d'entreprise`, value: 'Lumière' },
-      { label: 'Film', value: 'Ecran' },
-      { label: 'Animation', value: 'Casque' },
-      { label: 'Film Amateur', value: 'Clavier' },
-      { label: 'Animation', value: 'Disque Dur' },
+      { label: '* Indiquez le genre de votre vidéo', value: 0 },
+      { label: 'Court-Métrage', value: 'Court-Métrage' },
+      { label: `Clip`, value: `Clip` },
+      { label: `Vidéo d'entreprise`, value: `Vidéo d'entreprise` },
+      { label: 'Film', value: 'Film' },
+      { label: 'Animation', value: 'Animation' },
+      { label: 'Film Amateur', value: 'Film Amateur' },
+      { label: 'Animation', value: 'Animation' },
       { label: 'Autre', value: 'Autre' }
     ]
     return (
@@ -71,12 +71,12 @@ class AddVideoEditor extends React.Component {
                 Retour au Dashboard
               </Link>
               <h1 className="display-4 text-center">Ajoutez vos vidéos</h1>
-              <p className="lead text-center">Du film amateur, en passant par des clips et jusqu'à Hollywood. <br />Ajoutez toutes vos réalisations</p>
+              <p className="lead text-center">Du film amateur, en passant par des clips et des courts-métrages. <br />Ajoutez toutes vos réalisations</p>
               <small className="d-block pb-3">* = champs obligatoires</small>
               <form onSubmit={this.onSubmit}>
 
                 <TextFieldGroup
-                  placeholder="* Nom du matériel"
+                  placeholder="* Titre de votre vidéo"
                   name="title"
                   value={this.state.title}
                   onChange={this.onChange}
@@ -97,23 +97,14 @@ class AddVideoEditor extends React.Component {
                   error={errors.description}
                 />
                 <TextFieldGroup
-                  placeholder="URL vers le produit"
+                  placeholder="URL vers la vidéo"
                   name="url"
                   value={this.state.url}
                   onChange={this.onChange}
                   error={errors.url}
-                  info="Amazon, PriceMinister, CDiscount..."
+                  info="Votre vidéo doit être sur Youtube"
                 />
-
-                <TextFieldGroup
-                  placeholder="Visuel de votre produit"
-                  name="image"
-                  value={this.state.image}
-                  onChange={this.onChange}
-                  error={errors.image}
-                  info="Afin de garantir la qualité des visuels, veuillez utiliser un lien (Google Image, Amazon ou site officiel de votre produit...)"
-                />
-
+              
                 <input type="submit" value="Ajouter" className="btn btn-primary btn-block mt-4" />
 
               </form>

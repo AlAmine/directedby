@@ -33,7 +33,7 @@ router.post('/register', (req, res) => {
 
   User.findOne({ email: req.body.email }).then(user => {
     if(user) {
-      erros.email = `Ce mail a déjà été utilisé pour créer un compte`;
+      errors.email = `Ce mail a déjà été utilisé pour créer un compte`;
       return res.status(400).json({errors})
     } else {
       const avatar = gravatar.url(req.body.email, {

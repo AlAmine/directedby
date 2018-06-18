@@ -56,7 +56,7 @@ router.get('/all', (req, res) => {
     res.json(profiles);
   })
   .catch(err =>
-    res.status(404).json({profile: `Il n'y a aucun profil à afficher`})
+    res.status(404).json({profiles: `Il n'y a aucun profil à afficher`})
   );
 })
 
@@ -147,7 +147,7 @@ router.post('/', passport.authenticate('jwt', { session: false}), (req,res) => {
         Profile.findOne({ handle: profileFields.handle })
         .then(profile => {
           if(profile) {
-            erros.handle = "Ce profil existe déjà";
+            errors.handle = "Ce pseudo n'est pas disponible";
             res.status(400).json(errors);
 
           }

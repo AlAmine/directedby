@@ -12,7 +12,10 @@ class Dashboard extends React.Component {
 
   componentDidMount () {
       this.props.getCurrentProfile();
+
   }
+
+
 
   onDeleteClick(e) {
     this.props.deleteAccount();
@@ -35,7 +38,7 @@ class Dashboard extends React.Component {
             <ProfileActions />
             <VideoCreator creator={profile.videoCreatorGears}/>
             <br />
-            <hr className="dash" />
+
             <br />
             <VideoEditor editor={profile.videoEditingGears}/>
 

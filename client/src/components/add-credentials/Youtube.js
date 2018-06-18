@@ -7,7 +7,8 @@ class Example extends React.Component {
       height: '195',
       width: '320',
       playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0
+        autoplay: 0,
+        showinfo: 1
       }
     };
 

@@ -53,25 +53,14 @@ span {
   line-height: 1.5rem
 }
 
-.custom-file-input:lang(language) {
-  en: "Browse";
-  fr: "Parcourir";
-
+span.profiles {
+  color: #000;
+  font-size: 1rem;
 }
-
-/* on personnalise le label comme on veut */
-.label-file {
-    cursor: pointer;
-
+span.profile {
+  color: #fff;
+  font-size: 1rem;
 }
-.label-file:hover {
-    color: #25a5c4;
-}
-
-
-/* .input-file {
-    display: none;
-} */
 
 .disabled {
   display: none;
@@ -80,6 +69,10 @@ span {
   width: 70px;
 }
 
-th.matos {
+.matos {
   text-align:center;
+}
+i.fa-check {
+  color: green;
+  font-size: 12px;
 }
