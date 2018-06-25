@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteCreator,  } from '../../action/profileActions';
+import { withRouter } from 'react-router-dom';
+import { deleteCreator  } from '../../action/profileActions';
 // import Example from '../../components/add-credentials/Youtube';
 
 class VideoCreator extends React.Component {
@@ -20,7 +21,7 @@ class VideoCreator extends React.Component {
         <td>{create.typeofgears}</td>
         <td>{create.description}</td>
         <td><a href={create.url} className={(create.url === null || create.url === '' ? 'disabled' : 'btn btn-primary')} target="blank">Voir la fiche</a></td>
-        <td><button onClick={this.onDeleteRef.bind(this)} className="btn btn-danger">Supprimer </button> </td>
+        <td><button onClick={this.onDeleteRef.bind(this, create._id)} className="btn btn-danger">Supprimer </button> </td>
       </tr>
     ))
 
@@ -54,4 +55,4 @@ VideoCreator.propTypes = {
 }
 
 
-export default connect(null, { deleteCreator,  })(VideoCreator);
+export default connect(null, { deleteCreator })(withRouter(VideoCreator));

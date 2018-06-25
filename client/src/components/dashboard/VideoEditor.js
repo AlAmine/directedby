@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteEditor } from '../../action/profileActions';
-
+import { withRouter } from 'react-router-dom';
 
 class VideoEditor extends React.Component {
 
@@ -19,7 +19,7 @@ class VideoEditor extends React.Component {
         <td>{edit.typeofgears}</td>
         <td>{edit.description}</td>
         <td className="matos"><a href={edit.url} className={(edit.url === null || edit.url === '' ? 'disabled' : 'btn btn-primary')} target="blank">Voir la vidéo</a></td>
-        <td className="matos"><button onClick={this.onDeleteRef.bind(this)} className="btn btn-danger">Supprimer</button></td>
+        <td className="matos"><button onClick={this.onDeleteRef.bind(this, edit._id)} className="btn btn-danger">Supprimer</button></td>
       </tr>
     ))
 
@@ -51,4 +51,4 @@ VideoEditor.propTypes = {
   deleteEditor: PropTypes.func.isRequired
 }
 
-export default connect(null, { deleteEditor })(VideoEditor);
+export default connect(null, { deleteEditor })(withRouter(VideoEditor));

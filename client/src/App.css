@@ -72,9 +72,9 @@ span.profile {
 .matos {
   text-align:center;
 }
-i.fa-check {
+i.fa-slack-hash {
   color: green;
-  font-size: 12px;
+  font-size: 15px;
 }
 .card-img-top {
   width: 150px;

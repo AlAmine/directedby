@@ -12,7 +12,7 @@ class ProfileAbout extends React.Component {
       // récupérer les spécialites
       const skills = profile.skills.map((skill, index)=> (
         <div key={index} className="p-3 text-center">
-           #{skill.trim().split(' ')[0]}
+           <i className="fab fa-slack-hash pr-1" />{skill.trim().split(' ')[0]}
         </div>
       ))
     return (
@@ -36,6 +36,6 @@ class ProfileAbout extends React.Component {
   }
 }
 ProfileAbout.propTypes = {
-  profile : PropTypes.object.isRequired,
+  profile : PropTypes.object.isRequired
 }
 export default ProfileAbout;
