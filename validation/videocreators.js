@@ -17,9 +17,22 @@ module.exports = function validateCgearsInput(data) {
 
   if(!isEmpty(data.url)) {
     if(!Validator.isURL(data.url)) {
-      errors.url = `Cette adresse web n'est pas valide`;
+      errors.url = `Cette url n'est pas valide`;
+    }
+    if (!Validator.isURL(data.url, {protocols: ['http', 'https'], require_protocol: true})) {
+      errors.url = `L'url doit commencer par 'http:' ou 'https:'`;
     }
   }
+
+  if(!isEmpty(data.image)) {
+    if(!Validator.isURL(data.image)) {
+      errors.image = `Cette url web n'est pas valide`;
+    }
+    if (!Validator.isURL(data.image, {protocols: ['http', 'https'], require_protocol: true})) {
+      errors.image = `L'url doit commencer par 'http:' ou 'https:'`;
+    }
+  }
+
 
   return {
     errors,

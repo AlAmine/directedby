@@ -6,9 +6,6 @@ import TextFieldGroup  from '../common/TextFieldGroup';
 import TextAreaFieldGroup  from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import { addVideoEditor } from '../../action/profileActions';
-import Example from '../../components/add-credentials/Youtube';
-
-
 
 class AddVideoEditor extends React.Component {
   constructor(props) {
@@ -104,7 +101,7 @@ class AddVideoEditor extends React.Component {
                   error={errors.url}
                   info="Votre vidéo doit être sur Youtube"
                 />
-              
+
                 <input type="submit" value="Ajouter" className="btn btn-primary btn-block mt-4" />
 
               </form>

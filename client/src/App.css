@@ -76,3 +76,13 @@ i.fa-check {
   color: green;
   font-size: 12px;
 }
+.card-img-top {
+  width: 150px;
+  margin: 0 auto;
+}
+
+.nopix {
+  margin: 10px auto;
+  width: 250px;
+  opacity: .2;
+}

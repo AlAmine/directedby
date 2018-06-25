@@ -58,5 +58,7 @@ class ProfileHeader extends React.Component {
     )
   }
 }
-
+ProfileHeader.propTypes = {
+  profile : PropTypes.object.isRequired,
+}
 export default ProfileHeader;

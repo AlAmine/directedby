@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteEditor } from '../../action/profileActions';
-import YouTube from 'react-youtube';
+
 
 class VideoEditor extends React.Component {
 
@@ -11,15 +11,6 @@ class VideoEditor extends React.Component {
   }
 
   render() {
-
-    const opts = {
-      height: '195',
-      width: '320',
-      playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0,
-        showinfo: 1
-      }
-    };
     const editor = this.props.editor.map(edit => (
 
       <tr key={edit._id}>

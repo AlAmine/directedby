@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ProfileHeader from './ProfileHeader';
 import ProfileCreds from './ProfileCreds';
 import ProfileAbout from './ProfileAbout';
+import ProfileYoutube from './ProfileYoutube';
 import Spinner from '../common/Spinner';
 import { getProfileByHandle } from '../../action/profileActions';
 
@@ -34,6 +35,7 @@ class Profile extends React.Component {
             <ProfileHeader profile={profile}/>
             <ProfileAbout profile={profile}/>
             <ProfileCreds videoCreatorGears={profile.videoCreatorGears}/>
+            <ProfileYoutube videoEditingGears={profile.videoEditingGears}/>
         </div>
       )
     }
