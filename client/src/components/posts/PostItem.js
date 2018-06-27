@@ -74,6 +74,10 @@ class PostItem extends React.Component {
     )
   }
 }
+
+PostItem.defaultProps = {
+  showActions: true
+}
 PostItem.propTypes = {
   deletePost: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
