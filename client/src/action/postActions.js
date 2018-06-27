@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_POST, GET_ERRORS, GET_POSTS, POST_LOADING, DELETE_POST } from './types';
+import { ADD_POST, GET_ERRORS, GET_POSTS, POST_LOADING, GET_POST, DELETE_POST } from './types';
 
 // Ajout d'un post
 export const addPost = postData => dispatch => {
@@ -19,7 +19,7 @@ export const addPost = postData => dispatch => {
   )
 }
 
-// Afiicher les posts
+// Afficher les posts
 export const getPosts = () => dispatch => {
   dispatch(setPostLoading());
   axios
@@ -52,6 +52,50 @@ export const deletePost = id => dispatch => {
       dispatch ({
         type: GET_ERRORS,
         payload: err.response.data
+      })
+  )
+}
+
+// Ajouter un like
+export const addLike = id => dispatch => {
+  axios
+    .post(`/api/post/like/${id}`)
+    .then(res => dispatch (getPosts()))
+    .catch(err =>
+      dispatch ({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+  )
+}
+
+// Supprimer un like
+export const unLike = id => dispatch => {
+  axios
+    .post(`/api/post/unlike/${id}`)
+    .then(res => dispatch (getPosts()))
+    .catch(err =>
+      dispatch ({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+  )
+}
+// Afficher un post par id
+export const getPost = id => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get(`/api/post/${id}`)
+    .then(res =>
+      dispatch ({
+        type: GET_POST,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch ({
+        type: GET_POST,
+        payload: null
       })
   )
 }
