@@ -26,6 +26,15 @@ class PostItem extends React.Component {
       return false;
     }
   }
+
+  findUserComment(comments) {
+    const { auth } = this.props;
+    if(comments.filter(comment => comment.user === auth.user.id).length > 0 ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   render () {
     const { post, auth, showActions } = this.props;
     return (
@@ -54,6 +63,15 @@ class PostItem extends React.Component {
                     <button onClick={this.onDislikeClick.bind(this, post._id)} type="button" className="btn btn-light mr-1">
                       <i className="text-secondary fas fa-thumbs-down"></i>
                     </button>
+
+                    <button type="button" className="btn btn-light mr-1">
+                      <i className={classnames('fas fa-comment-dots', {
+                          'text-primary' : this.findUserComment(post.likes)
+                        }
+                      )}></i>
+                    <span className="badge badge-light">{post.comments.length}</span>
+                    </button>
+
                     <Link to={`/post/${post._id}`} className="btn btn-primary mr-1">
                       Commenter
                     </Link>

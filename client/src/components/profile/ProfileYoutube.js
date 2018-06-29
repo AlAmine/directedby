@@ -11,8 +11,8 @@ class ProfileYoutube extends React.Component {
   render () {
 
     const opts = {
-      height: '195',
-      width: '320',
+      height: '100%',
+      width: '100%',
       playerVars: { // https://developers.google.com/youtube/player_parameters
         autoplay: 0,
         showinfo: 1
@@ -20,38 +20,37 @@ class ProfileYoutube extends React.Component {
     };
     const { videoEditingGears } = this.props;
     const videoItem = videoEditingGears.map(video => (
-      <tr className="col-sm-12">
 
-          <td className="p-3">
-            <div key={video._id} className="video">
-            <YouTube
-              videoId={this.YouTubeGetID(video.url)}
-              opts={opts}
-              onReady={this._onReady}
-              />
-          </div>
-          </td>
-          <td className="p-3 mt-0 align-top">
-            <div className="video-body">
-              <h5 className="video-title">{video.title}</h5>
-              <h6 className="video-type"><i>{video.typeofgears}</i></h6><br />
-              <p className="video-text">{video.description.substr(0, 310)}</p>
-            </div>
-          </td>
+      <div className="col-xl-4 col-md-6 col-sm-12 mt-3">
+        <div key={video._id} className="card">
+          <div className="card-content">
+            <div className="card-body">
 
-      </tr>
-    ))
-    return (
-      <div className="row">
-        <div className="col-sm-12">
-          <div className="card card-body bg-light mb-3">
-            <h3 className="text-primary mb-3">Vidéos</h3>
-              <table>
-                {videoItem}
-              </table>
+              <h4 className="card-title mt-3">{video.title.substr(0, 24)}</h4>
+              <h6 className="card-subtitle text-muted"><i>{video.typeofgears}</i></h6>
+              <div key={video._id} className="embed-responsive embed-responsive-4by3 mt-2">
+                <YouTube
+                  videoId={this.YouTubeGetID(video.url)}
+                  opts={opts}
+                  onReady={this._onReady}
+                  />
+              </div>
+              <div className="card-body">
+                <p className="card-text">{video.description.substr(0, 150)}...</p>
+
+              </div>
           </div>
         </div>
       </div>
+    </div>
+    ))
+    return (
+      <div className="video">
+        <div className="card card-body bg-light mb-3">
+          <h3 className="text-primary mb-3">Vidéos</h3>
+            {videoItem.length > 0 ? (<div className="row">{videoItem}</div>) : <p className="text-center">Pas de vidéo</p>}
+          </div>
+        </div>
     )
   }
 }
