@@ -2,7 +2,7 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode'
 
-import { GET_ERRORS, SET_CURRENT_USER } from './types';
+import { GET_ERRORS, SET_CURRENT_USER, CLEAR_ERRORS } from './types';
 
 // Inscription
 export const registerUser = (userData, history )=> dispatch => {
@@ -12,7 +12,8 @@ export const registerUser = (userData, history )=> dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data}));
+        payload: err.response.data
+      }));
 };
 
 // Connexion => obtenir le Token d' l'user
@@ -34,8 +35,26 @@ export const loginUser = userData => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data}));
+        payload: err.response.data
+      }));
 };
+// *********************** //
+  // Mot de passe oublié
+  export const getPassword = (userData, history) => dispatch => {
+    dispatch(clearErrors())
+    axios
+    .post('/api/users/forgot-password', userData)
+    .then(res => history.push('/reset-password'))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      }))
+  }
+
+// *********************** //
+
+
   // fonction pour déterminer l'utilisateur courant
   export const setCurrentUser = (decoded) => {
     return {
@@ -52,4 +71,11 @@ export const loginUser = userData => dispatch => {
     setAuthToken(false);
     // on redefinit les donneés du current user et on passe isAuthenticate => false
     dispatch(setCurrentUser({}))
+  }
+
+  // effacer les messages d'erreur
+  export const clearErrors = () => {
+    return {
+      type: CLEAR_ERRORS
+    }
   }

@@ -21,6 +21,8 @@ import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import ForgotPassword from './components/auth/ForgotPassword';
+import ResetPassword from './components/auth/ResetPassword';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
@@ -91,6 +93,8 @@ class App extends Component {
             <Switch>
               <PrivateRoute exact path="/post/:id" component={ Post } />
             </Switch>
+            <Route exact path="/forgot-password" component={ ForgotPassword } />
+            <Route exact path="/reset-password" component={ ResetPassword } />
             <Route exact path="/not-found" component={ NotFound } />
           </div>
           <Footer/>

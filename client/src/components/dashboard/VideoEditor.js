@@ -12,36 +12,34 @@ class VideoEditor extends React.Component {
 
   render() {
     const editor = this.props.editor.map(edit => (
+      <div className="col-xl-4 col-md-6 col-sm-12 mt-3">
+        <div key={edit._id} className="card">
+          <div className="card-content">
+            <div className="card-body">
 
-      <tr key={edit._id}>
+              <h4 className="card-title mt-3">{edit.title.substr(0, 24)}</h4>
+              <h6 className="card-subtitle text-muted"><i>{edit.typeofgears}</i></h6>
 
-        <td>{edit.title}</td>
-        <td>{edit.typeofgears}</td>
-        <td>{edit.description}</td>
-        <td className="matos"><a href={edit.url} className={(edit.url === null || edit.url === '' ? 'disabled' : 'btn btn-primary')} target="blank">Voir la vidéo</a></td>
-        <td className="matos"><button onClick={this.onDeleteRef.bind(this, edit._id)} className="btn btn-danger">Supprimer</button></td>
-      </tr>
+
+                <p className="card-text">{edit.description.substr(0, 150)}...</p>
+                <a href={edit.url} className={(edit.url === null || edit.url === '' ? 'disabled' : 'btn btn-primary mt-3 mr-3')} target="blank">Voir la vidéo</a>
+                <button onClick={this.onDeleteRef.bind(this, edit._id)} className="btn btn-danger mr-3 mt-3">Supprimer</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
     ))
 
     return (
-      <div className={this.props.editor !== undefined ? "pa" : "disabled"}>
-        <h3 className="mb-4">Vos vidéos</h3>
-
-          <table className="table table-striped table-bordered table-list">
-            <thead>
-              <tr>
-
-                <th>Nom</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th className="matos"><i className="far fa-eye"></i></th>
-                <th className="matos"><i className="fas fa-trash-alt"></i></th>
-              </tr>
-            {editor}
-            </thead>
-          </table>
-
-      </div>
+      <div className="video">
+        <div className="card card-body bg-light mb-3">
+          <h3 className="text-primary mb-3">Vos vidéos</h3>
+            {editor.length > 0 ? (<div className="row">{editor}</div>) : <p className="text-center">Pas de vidéo</p>}
+          </div>
+        </div>
+    
     )
   }
 }

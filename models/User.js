@@ -18,6 +18,10 @@ const UserSchema = new Schema({
   avatar: {
     type: String
   },
+  passwordReset: {
+    type: String,
+    select: false
+  },
   date: {
     type: Date,
     default: Date.now

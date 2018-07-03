@@ -5,10 +5,12 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require ('passport');
+const nodemailer = require('nodemailer');
 
 // Chargement des fonctions de validation des champs
 const validateRegisterInput = require ('../../validation/register');
 const validateLoginInput = require ('../../validation/login');
+const validateForgotInput = require ('../../validation/forgot');
 
 // Chargemement du model pour les User
 const User = require('../../models/User')
@@ -101,6 +103,34 @@ router.post('/login', (req, res) => {
     })
   });
 });
+// @route GET api/users/forgot_password
+// @ desc Connexion des users
+// @acces Public
+router.post('/forgot-password', (req, res) => {
+  // initilisation de la fonction de vérificiation
+  const { errors, isValid } = validateForgotInput(req.body);
+
+  // Vérification des champs
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
+  const email = req.body.email;
+
+  User.findOne({email}).then(user => {
+    // Est ce qu'il existe ?
+    if(!user) {
+      console.log('nbada')
+      errors.email =  `Cett adresse mail n'est pas liée à un compte`;
+      return res.status(404).json(errors);
+      } else {
+      console.log('envoyé le mail')
+
+
+      }
+
+    })
+  })
 
 // @route GET api/users/current
 // @ desc Affiche l'user courant

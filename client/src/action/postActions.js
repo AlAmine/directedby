@@ -145,7 +145,7 @@ export const setPostLoading = () => {
   }
 }
 
-// chargement des posts
+// effacer les messages d'erreur
 export const clearErrors = () => {
   return {
     type: CLEAR_ERRORS
