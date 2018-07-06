@@ -6,11 +6,13 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require ('passport');
 const nodemailer = require('nodemailer');
+const flash = require('express-flash');
 
 // Chargement des fonctions de validation des champs
 const validateRegisterInput = require ('../../validation/register');
 const validateLoginInput = require ('../../validation/login');
 const validateForgotInput = require ('../../validation/forgot');
+const validateResetInput = require ('../../validation/reset');
 
 // Chargemement du model pour les User
 const User = require('../../models/User')
@@ -103,6 +105,36 @@ router.post('/login', (req, res) => {
     })
   });
 });
+
+let sentPassword =  function(email, name, url){
+
+  nodemailer.createTestAccount((err, account) => {
+    let transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      auth: {
+        user: 'directedby2k18@gmail.com',
+        pass:'alpa94700!directedby'
+      }
+    });
+
+    let mailOptions = {
+      from:'"DirectedBy"<exemple@of.fr>',
+      subject:'Information sur votre compte',
+      to:email,
+      replyTo:'directedby2k18@gmail.com',
+      text:'test from nodemail',
+      html:'<p>Bonjour ' + name +' <br> Afin de vous modifier votre mot de passe, nous vous invitions à cliquer sur le lien suivant </p> :' + url
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+         if(error){
+           return console.log(error)
+         }
+         console.log('Message sent : %s', info.messageId)
+    })
+  });
+
+}
 // @route GET api/users/forgot_password
 // @ desc Connexion des users
 // @acces Public
@@ -114,23 +146,56 @@ router.post('/forgot-password', (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors)
   }
-
   const email = req.body.email;
 
   User.findOne({email}).then(user => {
     // Est ce qu'il existe ?
+    console.log(user)
     if(!user) {
-      console.log('nbada')
       errors.email =  `Cett adresse mail n'est pas liée à un compte`;
       return res.status(404).json(errors);
-      } else {
-      console.log('envoyé le mail')
+    } else {
+      const name = user.name;
+      const randomString = length => {
+        let text = "";
+        let possibility = "abcdefghijklmnopqrstuvwxyz0123456789-_.";
+        for (let i = 0; i < length; i++) {
+          text += possibility.charAt(Math.floor(Math.random() * possibility.length))
+        }
+        return text
+      }
+      const token = randomString(40)
+      const url = "http://localhost:3000/reset-password/" + token
 
+      User.update({email}, { $set: {passwordReset: token}}, function(error, feedback) {
+        if (error) return res.send(error);
+        else {
+          console.log('envoyé le mail')
+          sentPassword(email, name, url)
+          res.send({success:'Mot de passe envoyé,merci de verifier votre boite de reception de meme votre dossier spam'});
+        }
+      })
 
       }
-
     })
-  })
+  });
+
+router.post('reset-password/', (req, res) => {
+  // initilisation de la fonction de vérificiation
+  const { errors, isValid } = validateResetInput(req.body);
+  // Vérification des champs
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  const { passwordReset, newPassword } = req.body;
+  User.hashPassword(newPassword)
+    .then(hashedPass => {
+      return User.update({passwordReset}, {$set: {password: hashedPass, passwordReset: ''}}, function(error, feedback) {
+        if(error) return res.send(error);
+        return res.send(feedback)
+      })
+    })
+})
 
 // @route GET api/users/current
 // @ desc Affiche l'user courant

@@ -44,7 +44,7 @@ export const loginUser = userData => dispatch => {
     dispatch(clearErrors())
     axios
     .post('/api/users/forgot-password', userData)
-    .then(res => history.push('/reset-password'))
+    .then(res => history.push('forgot-password/info'))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -54,6 +54,17 @@ export const loginUser = userData => dispatch => {
 
 // *********************** //
 
+// Modification du mot de passe
+export const changeUserPwd = (userData, history )=> dispatch => {
+  axios
+    .post('/api/users/reset-password/:token', userData)
+    .then(res => history.push('/login'))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      }));
+};
 
   // fonction pour déterminer l'utilisateur courant
   export const setCurrentUser = (decoded) => {
