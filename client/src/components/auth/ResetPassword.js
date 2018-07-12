@@ -9,8 +9,8 @@ class ResetPassword extends React.Component {
   constructor() {
     super();
     this.state = {
-      password: "",
-      password2: "",
+      newpassword: "",
+      newpassword2: "",
       errors: {}
     }
     this.onChange = this.onChange.bind(this);
@@ -18,31 +18,35 @@ class ResetPassword extends React.Component {
 
   }
 
+
   componentWillReceiveProps(nextProps){
     if(nextProps.errors) {
       this.setState({
         errors: nextProps.errors
       })
+
     }
   }
   onChange(e) {
     this.setState({[e.target.name]: e.target.value})
+
   }
   onSubmit(e) {
     e.preventDefault();
 
     const userData = {
-      password: this.state.password,
-      password2: this.state.password2
+      newpassword: this.state.newpassword,
+      newpassword2: this.state.newpassword2,
+      passwordReset: this.props.match.params.token
     };
     this.props.changeUserPwd(userData, this.props.history);
     console.log(userData);
 
   }
   render () {
-    const { errors } = this.state
+    const { errors } = this.state;
     return (
-      <div className="reset_password">
+      <div className="reset-password">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -52,19 +56,19 @@ class ResetPassword extends React.Component {
 
                 <TextFieldGroup
                   placeholder="Votre nouveau mot de passe"
-                  name="password"
-                  value={this.state.password}
+                  name="newpassword"
+                  value={this.state.newpassword}
                   onChange={this.onChange}
-                  error={errors.password}
+                  error={errors.newpassword}
                   type="password"
                 />
 
                 <TextFieldGroup
                   placeholder="Confirmez votre nouveau mot de passe"
-                  name="password2"
-                  value={this.state.password2}
+                  name="newpassword2"
+                  value={this.state.newpassword2}
                   onChange={this.onChange}
-                  error={errors.password2}
+                  error={errors.newpassword2}
                   type="password"
                 />
               <input type="submit" className="btn btn-primary btn-block mt-4" />
@@ -83,8 +87,8 @@ ResetPassword.propTypes = {
 
 }
 
-const mapStateProps = (state) => ({
+const mapStateToProps = (state) => ({
   errors: state.errors
 })
 
-export default connect(mapStateProps, { changeUserPwd })(withRouter(ResetPassword));
+export default connect(mapStateToProps, { changeUserPwd })(withRouter(ResetPassword));

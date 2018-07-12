@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const friends = require('mongoose-friends');
 const Schema = mongoose.Schema;
 
 // Création du Schema
@@ -27,5 +28,6 @@ const UserSchema = new Schema({
     default: Date.now
   }
 });
+UserSchema.plugin(friends());
 
 module.exports = User = mongoose.model('users', UserSchema);

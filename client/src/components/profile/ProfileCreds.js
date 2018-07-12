@@ -7,8 +7,8 @@ class ProfileCreds extends React.Component {
   render () {
     const { videoCreatorGears } = this.props;
     const gearsItem = videoCreatorGears.map(gear => (
-      <div className="col-xl-4 col-md-6 col-sm-12 mt-3">
-        <div key={gear._id} className="card">
+      <div key={gear._id} className="col-xl-4 col-md-6 col-sm-12 mt-3">
+        <div className="card">
           <div className="card-content">
             <div className="card-body">
             {isEmpty(gear.image) ? (<img className="card-img img-fluid mb-1 nopix" src="/nopix.jpg" alt={gear.title} />) : <img className="card-img img-fluid mb-1" src={gear.image} alt={gear.title} />}
@@ -33,6 +33,6 @@ class ProfileCreds extends React.Component {
   }
 }
 ProfileCreds.propTypes = {
-  videoCreatorGears : PropTypes.object.isRequired,
+  videoCreatorGears : PropTypes.array.isRequired,
 }
 export default ProfileCreds;

@@ -12,8 +12,8 @@ class VideoEditor extends React.Component {
 
   render() {
     const editor = this.props.editor.map(edit => (
-      <div className="col-xl-4 col-md-6 col-sm-12 mt-3">
-        <div key={edit._id} className="card">
+      <div key={edit._id} className="col-xl-4 col-md-6 col-sm-12 mt-3">
+        <div className="card">
           <div className="card-content">
             <div className="card-body">
 
@@ -39,7 +39,7 @@ class VideoEditor extends React.Component {
             {editor.length > 0 ? (<div className="row">{editor}</div>) : <p className="text-center">Pas de vidéo</p>}
           </div>
         </div>
-    
+
     )
   }
 }

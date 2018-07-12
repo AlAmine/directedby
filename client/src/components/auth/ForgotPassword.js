@@ -73,8 +73,8 @@ ForgotPassword.propTypes = {
 
 }
 
-const mapStateProps = (state) => ({
+const mapStateToProps = (state) => ({
   errors: state.errors
 })
 
-export default connect(mapStateProps, { getPassword })(withRouter(ForgotPassword));
+export default connect(mapStateToProps, { getPassword })(withRouter(ForgotPassword));

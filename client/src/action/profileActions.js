@@ -118,7 +118,6 @@ export const deleteCreator = (id) => dispatch => {
 }
 
 // Afficher les membres
-// delete VideoCreator
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
     axios
@@ -135,6 +134,32 @@ export const getProfiles = () => dispatch => {
         payload: null
 
       })
+    )
+  }
+
+  // Follow un membre
+  export const followMember = (friendsId) => dispatch => {
+    axios
+      .post(`/api/profile/follow`, friendsId)
+      .then(res => dispatch (getProfileByHandle()))
+      .catch(err =>
+        dispatch ({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+    )
+  }
+
+  // unFollow un membre
+  export const unFollowMember = id => dispatch => {
+    axios
+      .post(`/api/profile/unfollow/${id}`)
+      .then(res => dispatch (getProfiles()))
+      .catch(err =>
+        dispatch ({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
     )
   }
 

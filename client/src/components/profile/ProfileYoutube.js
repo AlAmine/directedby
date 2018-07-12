@@ -7,6 +7,8 @@ class ProfileYoutube extends React.Component {
     return (url[2] !== undefined) ? url[2].split(/[^0-9a-z_\-]/i)[0] : url[0];
     }
 
+  
+
 
   render () {
 
@@ -16,13 +18,14 @@ class ProfileYoutube extends React.Component {
       playerVars: { // https://developers.google.com/youtube/player_parameters
         autoplay: 0,
         showinfo: 1
+
       }
     };
     const { videoEditingGears } = this.props;
     const videoItem = videoEditingGears.map(video => (
 
-      <div className="col-xl-4 col-md-6 col-sm-12 mt-3">
-        <div key={video._id} className="card">
+      <div key={video._id} className="col-xl-4 col-md-6 col-sm-12 mt-3">
+        <div className="card">
           <div className="card-content">
             <div className="card-body">
 

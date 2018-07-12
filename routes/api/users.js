@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require ('passport');
 const nodemailer = require('nodemailer');
-const flash = require('express-flash');
+
 
 // Chargement des fonctions de validation des champs
 const validateRegisterInput = require ('../../validation/register');
@@ -123,8 +123,8 @@ let sentPassword =  function(email, name, url){
       subject:'Information sur votre compte',
       to:email,
       replyTo:'directedby2k18@gmail.com',
-      text:'test from nodemail',
-      html:'<p>Bonjour ' + name +' <br> Afin de vous modifier votre mot de passe, nous vous invitions à cliquer sur le lien suivant </p> :' + url
+      text:'Bonjour, Afin de modifier votre mot de passe , nous vous invitons à cliquer sur le lien',
+      html:'<p>Bonjour ' + name +' <br> Afin de vous modifier votre mot de passe, nous vous invitions à cliquer sur le lien suivant : '+ url +' </p> '
     };
     transporter.sendMail(mailOptions, (error, info) => {
          if(error){
@@ -135,8 +135,8 @@ let sentPassword =  function(email, name, url){
   });
 
 }
-// @route GET api/users/forgot_password
-// @ desc Connexion des users
+// @route POST api/users/forgot_password
+// @ desc Modification du mot de passe par email
 // @acces Public
 router.post('/forgot-password', (req, res) => {
   // initilisation de la fonction de vérificiation
@@ -156,15 +156,7 @@ router.post('/forgot-password', (req, res) => {
       return res.status(404).json(errors);
     } else {
       const name = user.name;
-      const randomString = length => {
-        let text = "";
-        let possibility = "abcdefghijklmnopqrstuvwxyz0123456789-_.";
-        for (let i = 0; i < length; i++) {
-          text += possibility.charAt(Math.floor(Math.random() * possibility.length))
-        }
-        return text
-      }
-      const token = randomString(40)
+      const token = jwt.sign({  data: 'resetLink'}, 'secret', { expiresIn: '300' });
       const url = "http://localhost:3000/reset-password/" + token
 
       User.update({email}, { $set: {passwordReset: token}}, function(error, feedback) {
@@ -172,7 +164,7 @@ router.post('/forgot-password', (req, res) => {
         else {
           console.log('envoyé le mail')
           sentPassword(email, name, url)
-          res.send({success:'Mot de passe envoyé,merci de verifier votre boite de reception de meme votre dossier spam'});
+          res.send({success:'Un mail vient de vous être envoyé, merci de verifier votre boite et suivre les instructions pour modifier votre mot de passe.'});
         }
       })
 
@@ -180,22 +172,36 @@ router.post('/forgot-password', (req, res) => {
     })
   });
 
-router.post('reset-password/', (req, res) => {
+router.post('/reset-password/:token', (req, res) => {
   // initilisation de la fonction de vérificiation
   const { errors, isValid } = validateResetInput(req.body);
   // Vérification des champs
   if (!isValid) {
     return res.status(400).json(errors)
   }
-  const { passwordReset, newPassword } = req.body;
-  User.hashPassword(newPassword)
-    .then(hashedPass => {
-      return User.update({passwordReset}, {$set: {password: hashedPass, passwordReset: ''}}, function(error, feedback) {
-        if(error) return res.send(error);
-        return res.send(feedback)
-      })
+  const { passwordReset, newpassword } = req.body
+  console.log(req.body.passwordReset)
+  User.findOne({passwordReset}).then(user => {
+    console.log(user)
+    if(!user) {
+      console.log('Personne ')
+      // errors.passwordReset = `Ce lien est expiré`;
+      // return res.status(400).json({errors})
+    } else {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newpassword, salt, (err, hash) => {
+          if(err) throw err;
+          user.password = hash;
+          User.update({passwordReset}, { $set: { password: user.password, passwordReset: ""}}, function(error, feedback) {
+                if(error) return res.send(error);
+                return res.send(feedback)
+            })
+          })
+        })
+      }
     })
-})
+  })
+
 
 // @route GET api/users/current
 // @ desc Affiche l'user courant

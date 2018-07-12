@@ -1,8 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import isEmpty from '../../validation/is-empty';
+import { followMember, unFollowMember } from '../../action/profileActions'
 
 class ProfileHeader extends React.Component {
+  componentWillReceiveProps(nextProps){
+    if(nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      })
+
+    }
+  }
+  onFollow() {
+    const friendsId = this.props.profile.user;
+    this.props.followMember(friendsId)
+    console.log(friendsId)
+
+  }
+
+  onUnFollow(id) {
+    this.props.unFollowMember(id)
+  }
   render () {
     const { profile } = this.props;
     return (
@@ -48,6 +68,11 @@ class ProfileHeader extends React.Component {
                   </a>
                 )}
                   </p>
+                  <p>
+                    <button onClick={this.onFollow.bind(this)}type="button" className="btn btn-light mr-1">
+                      <i className='fas fa-user-plus'></i>
+                    <span className="badge badge-light"></span>
+                    </button></p>
                 </div>
 
               </div>
@@ -60,5 +85,6 @@ class ProfileHeader extends React.Component {
 }
 ProfileHeader.propTypes = {
   profile : PropTypes.object.isRequired,
+  followMember: PropTypes.func.isRequired
 }
-export default ProfileHeader;
+export default connect(null, { followMember, unFollowMember })(ProfileHeader);

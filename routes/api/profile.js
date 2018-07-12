@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
 
 // Chargement des elements de validation
 const validateProfileInput = require('../../validation/profile');
@@ -285,6 +286,60 @@ router.delete('/editinggears/:edi_id', passport.authenticate('jwt', { session: f
   })
   .catch(err => res.status(404).json(err));
 });
+
+
+// Fonction pour créer le mail de demande
+let sentFriendsRequest =  function(email, name, friends_name, url){
+
+  nodemailer.createTestAccount((err, account) => {
+    let transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      auth: {
+        user: 'directedby2k18@gmail.com',
+        pass:'alpa94700!directedby'
+      }
+    });
+
+    let mailOptions = {
+      from:'"DirectedBy"<exemple@of.fr>',
+      subject:'Nouvelle demande de connexion',
+      to:email,
+      replyTo:'directedby2k18@gmail.com',
+      text:'test from nodemail',
+      html:'<p>Bonjour ' + name +' <br> Vous avez reçu une demande de connexion de la part de' + friends_name +'</p> : '+ url +' </p> '
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+         if(error){
+           return console.log(error)
+         }
+         console.log('Message sent : %s', info.messageId)
+    })
+  });
+
+}
+// *************************************************************TERMINER L'ENVOI DES MAILS POUR LES NOTIFICATIONS**************************************************************
+// @route POST api/profile/follow/:id
+// @ desc Follow un membre
+// @acces Private
+router.post('/follow', passport.authenticate('jwt', { session: false }), (req,res) => {
+  User.requestFriend(req.user.id, req.body._id, () => {
+    console.log(req.body._id)
+    User.findOne({user: req.body._id}).then(user => {
+      if(!user) console.log('nul')
+      else {
+
+        const email = user.email;
+        const name = req.user.name;
+        const friends_name = user.name;
+        sentFriendsRequest(email, name, friends_name)
+      }
+      })
+  })
+
+
+});
+
 
 // @route DELETE api/profile/
 // @ desc Efface le profil et l'utilisateur

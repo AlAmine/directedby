@@ -16,8 +16,8 @@ class VideoCreator extends React.Component {
   render() {
 
     const creator = this.props.creator.map(create => (
-      <div className="col-xl-4 col-md-6 col-sm-12 mt-3">
-        <div key={create._id} className="card">
+      <div key={create._id} className="col-xl-4 col-md-6 col-sm-12 mt-3">
+        <div className=" card">
           <div className="card-content">
             <div className="card-body">
             {isEmpty(create.image) ? (<img className="card-img img-fluid mb-1 nopix" src="/nopix.jpg" alt={create.title} />) : <img className="card-img img-fluid mb-1" src={create.image} alt={create.title} />}
@@ -32,15 +32,7 @@ class VideoCreator extends React.Component {
           </div>
         </div>
       </div>
-      // <tr key={create._id}>
-      //   <th scope="row" />
-      //   <td><a href={create.image} target="_blank"><img className="displayImg" src={create.image} alt={create.title}/></a></td>
-      //   <td>{create.title}</td>
-      //   <td>{create.typeofgears}</td>
-      //   <td>{create.description}</td>
-      //   <td><a href={create.url} className={(create.url === null || create.url === '' ? 'disabled' : 'btn btn-primary')} target="blank">Voir la fiche</a></td>
-      //   <td><button onClick={this.onDeleteRef.bind(this, create._id)} className="btn btn-danger">Supprimer </button> </td>
-      // </tr>
+
     ))
 
     return (
@@ -50,23 +42,7 @@ class VideoCreator extends React.Component {
           {creator.length > 0 ? (<div className="row">{creator}</div>) : <p className="text-center">Pas de matériel</p>}
         </div>
     </div>
-      // <div className={this.props.creator !== undefined ? "active" : "disabled"}>
-      //   <h3 className="mb-4">Votre matériel de captation</h3>
-      //     <table className="table table-sm ">
-      //       <thead>
-      //         <tr>
-      //           <th scope="col"/>
-      //           <th scope="col">Nom</th>
-      //           <th scope="col">Type</th>
-      //           <th scope="col">Description</th>
-      //           <th scope="col" className="matos"><i className="far fa-eye"></i></th>
-      //           <th scope="col" className="matos"><i className="fas fa-trash-alt"></i></th>
-      //         </tr>
-      //       {creator}
-      //       </thead>
-      //     </table>
-      //
-      // </div>
+
 
     )
   }

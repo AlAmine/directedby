@@ -6,6 +6,7 @@ import { GET_ERRORS, SET_CURRENT_USER, CLEAR_ERRORS } from './types';
 
 // Inscription
 export const registerUser = (userData, history )=> dispatch => {
+  dispatch(clearErrors());
   axios
     .post('/api/users/register', userData)
     .then(res => history.push('/login'))
@@ -41,21 +42,22 @@ export const loginUser = userData => dispatch => {
 // *********************** //
   // Mot de passe oublié
   export const getPassword = (userData, history) => dispatch => {
-    dispatch(clearErrors())
+    dispatch(clearErrors());
     axios
     .post('/api/users/forgot-password', userData)
-    .then(res => history.push('forgot-password/info'))
+    .then(res => history.push('/forgot-password/info'))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      }))
+      }));
   }
 
 // *********************** //
 
 // Modification du mot de passe
-export const changeUserPwd = (userData, history )=> dispatch => {
+export const changeUserPwd = (userData, history) => dispatch => {
+  dispatch(clearErrors());
   axios
     .post('/api/users/reset-password/:token', userData)
     .then(res => history.push('/login'))
