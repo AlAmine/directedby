@@ -20,7 +20,7 @@ class Navbar extends React.Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link className="nav-link" to="/feed">Fil d'actu</Link>
+          <Link className="nav-link" to="/feed" title="Fil d'actu"><i className="fas fa-rss"></i></Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">Dashboard</Link>

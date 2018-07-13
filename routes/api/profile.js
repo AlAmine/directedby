@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
+const keys = require('../../config/keys');
+const jwt = require('jsonwebtoken');
 
 // Chargement des elements de validation
 const validateProfileInput = require('../../validation/profile');
@@ -29,7 +31,7 @@ router.get('/', passport.authenticate('jwt', { session: false}), (req,res) => {
   const errors = {};
 
   Profile.findOne({ user: req.user.id })
-  .populate('user', ['name', 'avatar'])
+  .populate('user', ['name', 'avatar', 'email', 'friends'])
   .then(profile => {
     if(!profile) {
       errors.noprofile = `Il n'y a pas de profil correspondant à cet utilisateur`;
@@ -48,7 +50,7 @@ router.get('/all', (req, res) => {
   const errors = {};
 
   Profile.find()
-  .populate('user', ['name', 'avatar'])
+  .populate('user', ['name', 'avatar', 'email', 'friends' ])
   .then(profiles => {
     if(!profiles) {
       errors.noprofile = `Il n'y a aucun profil à afficher`;
@@ -69,7 +71,7 @@ router.get('/handle/:handle', (req, res)=> {
   const errors = {};
 
   Profile.findOne({ handle: req.params.handle })
-  .populate('user', ['name', 'avatar'])
+  .populate('user', ['name', 'avatar', 'email', 'friends'])
   .then(profile => {
     if(!profile) {
       errors.noprofile = `Il n'y a pas de profil correspondant à cet utilisateur`;
@@ -88,7 +90,7 @@ router.get('/user/:user_id', (req, res)=> {
   const errors = {};
 
   Profile.findOne({ user: req.params.user_id })
-  .populate('user', ['name', 'avatar'])
+  .populate('user', ['name', 'avatar', 'email', 'friends'])
   .then(profile => {
     if(!profile) {
       errors.noprofile = `Il n'y a pas de profil correspondant à cet utilisateur`;
@@ -307,7 +309,7 @@ let sentFriendsRequest =  function(email, name, friends_name, url){
       to:email,
       replyTo:'directedby2k18@gmail.com',
       text:'test from nodemail',
-      html:'<p>Bonjour ' + name +' <br> Vous avez reçu une demande de connexion de la part de' + friends_name +'</p> : '+ url +' </p> '
+      html:'<p>Bonjour ' + name +' <br><br> Vous avez reçu une demande de connexion de la part de ' + friends_name +'</p> : '+ url +' </p> '
     };
     transporter.sendMail(mailOptions, (error, info) => {
          if(error){
@@ -325,20 +327,40 @@ let sentFriendsRequest =  function(email, name, friends_name, url){
 router.post('/follow', passport.authenticate('jwt', { session: false }), (req,res) => {
   User.requestFriend(req.user.id, req.body._id, () => {
     console.log(req.body._id)
-    User.findOne({user: req.body._id}).then(user => {
-      if(!user) console.log('nul')
+    console.log(req.user.email)
+    console.log(req.body.email)
+    User.findOne({email: req.body.email}).then(user => {
+      if(!user) console.log(user.friends)
+
       else {
 
         const email = user.email;
-        const name = req.user.name;
-        const friends_name = user.name;
-        sentFriendsRequest(email, name, friends_name)
+        const friends_name = req.user.name;
+        const name = user.name;
+        console.log('this is a user : ' + user)
+
+        // User reconnu
+        const payload = { id: user.id, name: user.name, avatar: user.friends, friendsId: req.user.id, friendsName: req.user.name } // Création du Token JWT
+
+
+        // Token
+        const token =  jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 })
+        console.log(payload)
+        console.log(user.friends)
+        const url = "http://localhost:3000/follow/" + token
+        sentFriendsRequest(email, name, friends_name, url)
       }
       })
   })
-
-
 });
+
+// @route POST api/profile/follow/:token
+// @ desc Follow un membre
+// @acces Private
+router.get('/follow/:token', passport.authenticate('jwt', { session: false }), (req,res) => {
+  User.getPendingFriend(req.user.id, {}, null, {sort: {name: 1}}, cb)
+});
+
 
 
 // @route DELETE api/profile/

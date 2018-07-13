@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from '../../validation/is-empty';
-import { followMember, unFollowMember } from '../../action/profileActions'
+import { followMember, unFollowMember } from '../../action/profileActions';
+import classnames from 'classnames';
 
 class ProfileHeader extends React.Component {
   componentWillReceiveProps(nextProps){
@@ -10,19 +11,30 @@ class ProfileHeader extends React.Component {
       this.setState({
         errors: nextProps.errors
       })
-
     }
   }
+
   onFollow() {
     const friendsId = this.props.profile.user;
     this.props.followMember(friendsId)
     console.log(friendsId)
-
   }
 
-  onUnFollow(id) {
-    this.props.unFollowMember(id)
+  findUserFriends(friends) {
+    const { auth } = this.props;
+    if(friends.filter(friend => friend._id === auth.user.id).length > 0 ) {
+      return true;
+    } else {
+      return false;
+    }
   }
+
+  onUnFollow() {
+    const friendsId = this.props.profile.user.friends;
+    console.log(friendsId)
+    this.props.unFollowMember(friendsId)
+  }
+
   render () {
     const { profile } = this.props;
     return (
@@ -36,50 +48,56 @@ class ProfileHeader extends React.Component {
                 </div>
                 <div className="text-center">
                   <h1 className="display-5 text-center">{profile.user.name}</h1>
-                  <p className="lead text-center">{profile.status}{isEmpty(profile.company) ? null : (<span className="profile">chez {profile.company}
-                  </span>)}<br />
-                  {isEmpty(profile.location) ? null : (<span className="profile">à {profile.location}
-                </span>)}
+                  <p className="lead text-center">{profile.status}{isEmpty(profile.company) ? null : (
+                    <span className="profile">chez {profile.company}</span>)}
+                    <br />
+                    {isEmpty(profile.location) ? null : (
+                    <span className="profile">à {profile.location}</span>)}
                   </p>
                   <p>
                     {isEmpty(profile.website) ? null : (
-                      <a className="text-white p-2" href={profile.website} target="_blank">
+                    <a className="text-white p-2" href={profile.website} target="_blank">
                         <i className="fas fa-globe fa-2x"></i>
-                      </a>
+                    </a>
                     )}
                     {isEmpty(profile.social && profile.social.twitter) ? null : (
-                      <a className="text-white p-2" href={profile.social.twitter}  target="_blank">
+                    <a className="text-white p-2" href={profile.social.twitter}  target="_blank">
                       <i className="fab fa-twitter fa-2x"></i>
                     </a>
-                  )}
-                  {isEmpty(profile.social && profile.social.facebook) ? null : (
+                    )}
+                    {isEmpty(profile.social && profile.social.facebook) ? null : (
                     <a className="text-white p-2" href={profile.social.facebook}  target="_blank">
                       <i className="fab fa-facebook fa-2x"></i>
                     </a>
-                  )}
-                  {isEmpty(profile.social && profile.social.instagram) ? null : (
+                    )}
+                    {isEmpty(profile.social && profile.social.instagram) ? null : (
                     <a className="text-white p-2" href={profile.social.instagram}  target="_blank">
                       <i className="fab fa-instagram fa-2x"></i>
                     </a>
-                  )}
-                  {isEmpty(profile.social && profile.social.youtube) ? null : (
+                    )}
+                    {isEmpty(profile.social && profile.social.youtube) ? null : (
                     <a className="text-white p-2" href={profile.social.youtube}  target="_blank">
-                    <i className="fab fa-youtube fa-2x"></i>
-                  </a>
-                )}
+                      <i className="fab fa-youtube fa-2x"></i>
+                    </a>
+                    )}
                   </p>
                   <p>
-                    <button onClick={this.onFollow.bind(this)}type="button" className="btn btn-light mr-1">
-                      <i className='fas fa-user-plus'></i>
-                    <span className="badge badge-light"></span>
-                    </button></p>
-                </div>
+                    <button type="button" onClick={this.onFollow.bind(this)} className="btn btn-light mr-1">
+                      <i className={classnames('fas fa-user-plus', {
+                          'text-primary' : this.findUserFriends(profile.user.friends)})}>
+                      </i>
+                      <span className="text-primary badge badge-light">{profile.user.friends.length}</span>
+                    </button>
 
+                    <button onClick={this.onUnFollow.bind(this)}type="button" className="btn btn-danger mr-1">
+                      <i className="fas fa-user-minus"></i>
+                      <span className="badge badge-light"></span>
+                    </button>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-
-
     )
   }
 }
@@ -87,4 +105,8 @@ ProfileHeader.propTypes = {
   profile : PropTypes.object.isRequired,
   followMember: PropTypes.func.isRequired
 }
-export default connect(null, { followMember, unFollowMember })(ProfileHeader);
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+export default connect(mapStateToProps, { followMember, unFollowMember })(ProfileHeader);

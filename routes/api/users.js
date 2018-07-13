@@ -156,7 +156,7 @@ router.post('/forgot-password', (req, res) => {
       return res.status(404).json(errors);
     } else {
       const name = user.name;
-      const token = jwt.sign({  data: 'resetLink'}, 'secret', { expiresIn: '300' });
+      const token = jwt.sign({  data: 'resetLink'}, keys.secretOrKey, { expiresIn: '300' });
       const url = "http://localhost:3000/reset-password/" + token
 
       User.update({email}, { $set: {passwordReset: token}}, function(error, feedback) {

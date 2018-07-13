@@ -37,6 +37,7 @@ export const getProfileByHandle = (handle) => dispatch => {
     })
   );
 }
+
 // Create profile
 export const createProfile = (profileData, history) => dispatch => {
   axios
@@ -46,7 +47,6 @@ export const createProfile = (profileData, history) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-
       })
     )
 }
@@ -59,8 +59,8 @@ export const addVideoCreator = (videoCreatorData, history) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-
-      }))
+      })
+    )
 }
 // Ajout du matériel d'édition
 export const addVideoEditor = (videoEditorData, history) => dispatch => {
@@ -71,8 +71,8 @@ export const addVideoEditor = (videoEditorData, history) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-
-      }))
+      })
+    )
 }
 // delete VideoEditor
 export const deleteEditor = (id) => dispatch => {
@@ -89,7 +89,6 @@ export const deleteEditor = (id) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-
       })
     )
   }
@@ -111,7 +110,6 @@ export const deleteCreator = (id) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-
       })
     )
   }
@@ -132,13 +130,13 @@ export const getProfiles = () => dispatch => {
       dispatch({
         type: GET_PROFILES,
         payload: null
-
       })
     )
   }
 
   // Follow un membre
   export const followMember = (friendsId) => dispatch => {
+      if(window.confirm('Voulez-vous envoyer une demande de connexion à ce membre ?')) {
     axios
       .post(`/api/profile/follow`, friendsId)
       .then(res => dispatch (getProfileByHandle()))
@@ -147,9 +145,21 @@ export const getProfiles = () => dispatch => {
           type: GET_ERRORS,
           payload: err.response.data
         })
-    )
+      )
+    }
   }
-
+  // Accepter la demande d'ami
+  export const acceptMember = (friendsId) => dispatch => {
+    axios
+      .post(`/api/profile/follow/:token`, friendsId)
+      .then(res => dispatch(getProfileByHandle()))
+      .catch(err =>
+        dispatch ({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      )
+  }
   // unFollow un membre
   export const unFollowMember = id => dispatch => {
     axios
@@ -160,8 +170,8 @@ export const getProfiles = () => dispatch => {
           type: GET_ERRORS,
           payload: err.response.data
         })
-    )
-  }
+      )
+    }
 
 // Delete Account & Profile
 export const deleteAccount = () => dispatch => {
@@ -172,8 +182,8 @@ export const deleteAccount = () => dispatch => {
         dispatch({
           type: SET_CURRENT_USER,
           payload: {}
-        })
-      ).catch(err =>
+        }))
+      .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
