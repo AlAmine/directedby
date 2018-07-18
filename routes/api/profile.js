@@ -358,7 +358,16 @@ router.post('/follow', passport.authenticate('jwt', { session: false }), (req,re
 // @ desc Follow un membre
 // @acces Private
 router.get('/follow/:token', passport.authenticate('jwt', { session: false }), (req,res) => {
-  User.getPendingFriend(req.user.id, {}, null, {sort: {name: 1}}, cb)
+  User.getPendingFriend(req.user.id, {}, null, {sort: {name: 1}}, () => {
+    User.find().then(profile => {
+      if(!profile) {
+        errors.noprofile = `Il n'y a pas de profil correspondant à cet utilisateur`;
+        return res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => res.status(404).json({profile: `Il n'y a pas de profil correspondant à cet utilisateur`}))
+  })
 });
 
 

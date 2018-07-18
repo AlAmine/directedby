@@ -149,10 +149,10 @@ export const getProfiles = () => dispatch => {
     }
   }
   // Accepter la demande d'ami
-  export const acceptMember = (friendsId) => dispatch => {
+  export const acceptMember = () => dispatch => {
     axios
-      .post(`/api/profile/follow/:token`, friendsId)
-      .then(res => dispatch(getProfileByHandle()))
+      .post(`/api/profile/follow/:token`)
+      .then(res => dispatch(getProfiles()))
       .catch(err =>
         dispatch ({
           type: GET_ERRORS,

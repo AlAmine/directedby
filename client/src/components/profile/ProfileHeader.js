@@ -22,7 +22,7 @@ class ProfileHeader extends React.Component {
 
   findUserFriends(friends) {
     const { auth } = this.props;
-    if(friends.filter(friend => friend._id === auth.user.id).length > 0 ) {
+    if(friends.filter(friend => friend._id === auth.user.id && friend.status === 'accepted' ).length > 0 ) {
       return true;
     } else {
       return false;
@@ -86,12 +86,14 @@ class ProfileHeader extends React.Component {
                       <i className={classnames('fas fa-user-plus', {
                           'text-primary' : this.findUserFriends(profile.user.friends)})}>
                       </i>
-                      <span className="text-primary badge badge-light">{profile.user.friends.length}</span>
+
                     </button>
 
-                    <button onClick={this.onUnFollow.bind(this)}type="button" className="btn btn-danger mr-1">
-                      <i className="fas fa-user-minus"></i>
-                      <span className="badge badge-light"></span>
+                    <button onClick={this.onUnFollow.bind(this)} type="button" className="btn btn-light mr-1">
+                      <i className={classnames('fas fa-user-minus', {
+                          'text-danger ' : this.findUserFriends(profile.user.friends)})}>
+                        </i>
+
                     </button>
                   </p>
                 </div>
