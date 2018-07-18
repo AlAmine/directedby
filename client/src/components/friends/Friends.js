@@ -7,7 +7,7 @@ import Spinner from '../common/Spinner';
 
 class Friends extends React.Component {
   componentDidMount() {
-    this.props.getCurrentProfile(acceptMember);
+    this.props.getCurrentProfile();
   }
   render () {
     const { profile, loading } = this.props;
@@ -16,7 +16,7 @@ class Friends extends React.Component {
     if(profile === null || loading) {
       friendsItems = <Spinner />;
     }
-    
+
     return (
 
       <div>Demande de connexion</div>
