@@ -309,7 +309,7 @@ let sentFriendsRequest =  function(email, name, friends_name, url){
       to:email,
       replyTo:'directedby2k18@gmail.com',
       text:'test from nodemail',
-      html:'<p>Bonjour ' + name +' <br><br> Vous avez reçu une demande de connexion de la part de ' + friends_name +'</p> : '+ url +' </p> '
+      html:'<p>Bonjour ' + name +' <br><br> Vous avez reçu une demande de connexion de la part de ' + friends_name +' : <a href='+ url +' target="_blank">Voir la demande</a> </p> '
     };
     transporter.sendMail(mailOptions, (error, info) => {
          if(error){

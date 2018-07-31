@@ -1,41 +1,48 @@
 import axios from 'axios';
 // import types
-import { GET_PROFILE, GET_PROFILES, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER } from './types';
+import {
+  GET_PROFILE,
+  GET_PROFILES,
+  PROFILE_LOADING,
+  CLEAR_CURRENT_PROFILE,
+  GET_ERRORS,
+  SET_CURRENT_USER
+} from './types';
 
 // current profil
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios.get('/api/profile')
-  .then(res =>
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data
-    })
-  )
-  .catch(err =>
-    dispatch({
-      type: GET_PROFILE,
-      payload: {}
-    })
-  );
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: {}
+      })
+    );
 }
 
 // afficher le  profil via le pseudo
 export const getProfileByHandle = (handle) => dispatch => {
   dispatch(setProfileLoading());
   axios.get(`/api/profile/handle/${handle}/`)
-  .then(res =>
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data
-    })
-  )
-  .catch(err =>
-    dispatch({
-      type: GET_PROFILE,
-      payload: null
-    })
-  );
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: null
+      })
+    );
 }
 
 // Create profile
@@ -76,49 +83,49 @@ export const addVideoEditor = (videoEditorData, history) => dispatch => {
 }
 // delete VideoEditor
 export const deleteEditor = (id) => dispatch => {
-  if(window.confirm('Voulez-vous réellement supprimer cette vidéo ? Cette action est irreversible !')) {
-  axios
-    .delete(`/api/profile/editinggears/${id}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    )
+  if (window.confirm('Voulez-vous réellement supprimer cette vidéo ? Cette action est irreversible !')) {
+    axios
+      .delete(`/api/profile/editinggears/${id}`)
+      .then(res =>
+        dispatch({
+          type: GET_PROFILE,
+          payload: res.data
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      )
   }
 }
 
 // delete VideoCreator
 export const deleteCreator = (id) => dispatch => {
-  if(window.confirm('Voulez-vous réellement supprimer ce matériel ? Cette action est irreversible !')) {
+  if (window.confirm('Voulez-vous réellement supprimer ce matériel ? Cette action est irreversible !')) {
 
     axios
-    .delete(`/api/profile/creatorsgears/${id}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    )
+      .delete(`/api/profile/creatorsgears/${id}`)
+      .then(res =>
+        dispatch({
+          type: GET_PROFILE,
+          payload: res.data
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      )
   }
 }
 
 // Afficher les membres
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
-    axios
+  axios
     .get(`/api/profile/all`)
     .then(res =>
       dispatch({
@@ -132,50 +139,50 @@ export const getProfiles = () => dispatch => {
         payload: null
       })
     )
-  }
+}
 
-  // Follow un membre
-  export const followMember = (friendsId) => dispatch => {
-      if(window.confirm('Voulez-vous envoyer une demande de connexion à ce membre ?')) {
+// Follow un membre
+export const followMember = (friendsId) => dispatch => {
+  if (window.confirm('Voulez-vous envoyer une demande de connexion à ce membre ?')) {
     axios
       .post(`/api/profile/follow`, friendsId)
-      .then(res => dispatch (getProfileByHandle()))
+      .then(res => dispatch(getProfileByHandle()))
       .catch(err =>
-        dispatch ({
-          type: GET_ERRORS,
-          payload: err.response.data
-        })
-      )
-    }
-  }
-  // Accepter la demande d'ami
-  export const acceptMember = () => dispatch => {
-    axios
-      .post(`/api/profile/follow/:token`)
-      .then(res => dispatch(getProfiles()))
-      .catch(err =>
-        dispatch ({
+        dispatch({
           type: GET_ERRORS,
           payload: err.response.data
         })
       )
   }
-  // unFollow un membre
-  export const unFollowMember = id => dispatch => {
-    axios
-      .post(`/api/profile/unfollow/${id}`)
-      .then(res => dispatch (getProfiles()))
-      .catch(err =>
-        dispatch ({
-          type: GET_ERRORS,
-          payload: err.response.data
-        })
-      )
-    }
+}
+// Accepter la demande d'ami
+export const acceptMember = () => dispatch => {
+  axios
+    .post(`/api/profile/follow/:token`)
+    .then(res => dispatch(getProfiles()))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
+// unFollow un membre
+export const unFollowMember = id => dispatch => {
+  axios
+    .post(`/api/profile/unfollow/${id}`)
+    .then(res => dispatch(getProfiles()))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
 
 // Delete Account & Profile
 export const deleteAccount = () => dispatch => {
-  if(window.confirm('Voulez-vous réellement supprimer votre compte ? Cette action est irreversible !')) {
+  if (window.confirm('Voulez-vous réellement supprimer votre compte ? Cette action est irreversible !')) {
     axios
       .delete('/api/profile')
       .then(res =>
@@ -184,11 +191,11 @@ export const deleteAccount = () => dispatch => {
           payload: {}
         }))
       .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
   }
 };
 // Profile loading
