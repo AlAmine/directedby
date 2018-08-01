@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { deleteCreator  } from '../../action/profileActions';
 import isEmpty from '../../validation/is-empty';
-// import Example from '../../components/add-credentials/Youtube';
+
 
 class VideoCreator extends React.Component {
   onDeleteRef(id) {
@@ -20,7 +20,7 @@ class VideoCreator extends React.Component {
         <div className=" card">
           <div className="card-content">
             <div className="card-body">
-            {isEmpty(create.image) ? (<img className="card-img img-fluid mb-1 nopix" src="/nopix.jpg" alt={create.title} />) : <img className="card-img img-fluid mb-1" src={create.image} alt={create.title} />}
+            {isEmpty(create.image) ? (<img className="card-img img-fluid mb-1 nopix" src="img/nopix.jpg" alt={create.title} />) : <img className="card-img img-fluid mb-1" src={create.image} alt={create.title} />}
               <h4 className="card-title mt-3">{create.title.substr(0, 24)}</h4>
               <h6 className="card-subtitle text-muted"><i>{create.typeofgears}</i></h6>
                 <p className="card-text">{create.description.substr(0, 150)}...</p>

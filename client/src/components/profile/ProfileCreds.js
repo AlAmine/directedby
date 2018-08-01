@@ -11,7 +11,7 @@ class ProfileCreds extends React.Component {
         <div className="card">
           <div className="card-content">
             <div className="card-body">
-            {isEmpty(gear.image) ? (<img className="card-img img-fluid mb-1 nopix" src="public/nopix.jpg" alt={gear.title} />) : <img className="card-img img-fluid mb-1" src={gear.image} alt={gear.title} />}
+            {isEmpty(gear.image) ? (<img className="card-img img-fluid mb-1 nopix" src="./img/nopix.jpg" alt={gear.title} />) : <img className="card-img img-fluid mb-1" src={gear.image} alt={gear.title} />}
               <h4 className="card-title mt-3">{gear.title.substr(0, 24)}</h4>
               <h6 className="card-subtitle text-muted"><i>{gear.typeofgears}</i></h6>
                 <p className="card-text">{gear.description.substr(0, 150)}...</p>
