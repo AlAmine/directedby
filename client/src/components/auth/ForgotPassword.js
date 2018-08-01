@@ -45,7 +45,7 @@ class ForgotPassword extends React.Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Mot de passe oublié</h1>
-            <p className="lead text-center">Merci d'indiquer votre email afin de récupérer le mot de passe lié à votre compte <i>DirectedBy</i></p>
+            <p className="lead text-center">Merci de nous indiquer votre email afin de régénérer un nouveau mot de passe pour votre compte <i>DirectedBy</i></p>
               <form onSubmit={this.onSubmit}>
 
                 <TextFieldGroup

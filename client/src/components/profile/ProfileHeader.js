@@ -36,7 +36,7 @@ class ProfileHeader extends React.Component {
   }
 
   render () {
-    const { profile } = this.props;
+    const { profile, auth } = this.props;
     return (
       <div className="row">
             <div className="col-md-12">
@@ -82,19 +82,22 @@ class ProfileHeader extends React.Component {
                     )}
                   </p>
                   <p>
+                  {profile.user._id === auth.user.id ? null : (
                     <button type="button" onClick={this.onFollow.bind(this)} className="btn btn-light mr-1">
                       <i className={classnames('fas fa-user-plus', {
                           'text-primary' : this.findUserFriends(profile.user.friends)})}>
                       </i>
 
                     </button>
-
+                    )}
+                    {profile.user._id === auth.user.id ? null : (
                     <button onClick={this.onUnFollow.bind(this)} type="button" className="btn btn-light mr-1">
                       <i className={classnames('fas fa-user-minus', {
                           'text-danger ' : this.findUserFriends(profile.user.friends)})}>
                         </i>
 
                     </button>
+                    )}
                   </p>
                 </div>
               </div>
@@ -105,7 +108,8 @@ class ProfileHeader extends React.Component {
 }
 ProfileHeader.propTypes = {
   profile : PropTypes.object.isRequired,
-  followMember: PropTypes.func.isRequired
+  followMember: PropTypes.func.isRequired,
+  unFollowMember: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

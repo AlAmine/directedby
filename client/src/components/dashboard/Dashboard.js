@@ -12,7 +12,6 @@ class Dashboard extends React.Component {
 
   componentDidMount () {
       this.props.getCurrentProfile();
-
   }
 
 
@@ -51,7 +50,7 @@ class Dashboard extends React.Component {
         dashboardContent = (
           <div>
             <p className="lead text-muted">Bienvenue { user.name }</p>
-            <p>Vous n'avez pas encore crée votre profil, merci de le compléter afin de montrer votre travail aux autres membres.</p>
+            <p>Vous n avez pas encore crée votre profil, merci de le compléter afin de montrer votre travail aux autres membres.</p>
             <Link to="/create-profile" className="btn btn-lg btn-primary">
               Créez votre profil
             </Link>

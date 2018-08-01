@@ -15,9 +15,7 @@ class ResetPassword extends React.Component {
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
   }
-
 
   componentWillReceiveProps(nextProps){
     if(nextProps.errors) {
@@ -51,7 +49,7 @@ class ResetPassword extends React.Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Changez votre mot de passe</h1>
-            <p className="lead text-center">Merci d'indiquer un nouveau mot de passe et de le confirmer pour votre compte <i>DirectedBy</i></p>
+            <p className="lead text-center">Merci de renseigner un nouveau mot de passe et de le confirmer pour votre compte <i>DirectedBy</i></p>
               <form onSubmit={this.onSubmit}>
 
                 <TextFieldGroup
