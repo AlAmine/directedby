@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
-const path = require('path')
+const path = require('path');
 
 // Déclaration des routes
 const users = require('./routes/api/users');
