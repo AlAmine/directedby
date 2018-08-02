@@ -23,7 +23,7 @@ class ProfileAbout extends React.Component {
                 <p className="lead">{isEmpty(profile.bio) ? (<span>{firstName} n a pas renseigné de biographie</span>) : <span>{profile.bio}</span>}
                 </p>
                 <hr className="dash"/>
-                <h4 className="text-primary">Spécialités</h4>
+                <h4 className="text-primary">Spécialtés</h4>
                 <div className="row">
                   <div className="d-flex flex-wrap justify-content-center align-items-center">
                   {skills}

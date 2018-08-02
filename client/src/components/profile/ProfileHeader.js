@@ -100,11 +100,19 @@ class ProfileHeader extends React.Component {
                     )}
                     {profile.user._id === auth.user.id ? null : (
                     <button type="button" className="btn btn-light mr-1">
-                      <i className='fas fa-user-minus'>
+                      <i className='far fa-envelope'>
                         </i>
 
                     </button>
                     )}
+                  )}
+                  {profile.user._id === auth.user.id ? null : (
+                  <button type="button" className="btn btn-light mr-1">
+                    <i className='far fa-comment-alt'>
+                      </i>
+
+                  </button>
+                  )}
                   </p>
                 </div>
               </div>
